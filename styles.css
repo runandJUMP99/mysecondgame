@@ -1,9 +1,15 @@
-.container {
+.game-stats {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+}
+
+.grid-container {
     display: flex;
 }
 
 .grid {
-    background: yellow;
+    background: #ccc;
     display: flex;
     flex-wrap: wrap;
     height: 400px;
@@ -20,7 +26,7 @@
 }
 
 .mini-grid {
-    background: yellow;
+    background: #ccc;
     display: flex;
     flex-wrap: wrap;
     height: 80px;
