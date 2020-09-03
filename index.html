@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tetris</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+    <h1 id="game-over"></h1>
+
     <div class="game-stats">
         <h3>Level: <span id="level-display"></span></h3>
         <h3>Score: <span id="score-display">0</span></h3>
     </div>
-    <button id="start-button">Start/Pause</button>
 
     <div class="grid-container">
         <div class="grid">
@@ -246,6 +249,8 @@
             <div></div>
         </div>
     </div>
+
+    <button id="start-button">Start/Pause</button>
 
     <script src="index.js"></script>
 </body>
