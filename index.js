@@ -84,7 +84,7 @@ function undraw() {
     });
 }
 
-document.addEventListener("keyup", control);
+document.addEventListener("keydown", control);
 
 function control(event) {
     if (timerId) {
@@ -95,9 +95,9 @@ function control(event) {
         } else if (event.key === "ArrowDown") {
             moveDown();
         } else if (event.key === "ArrowUp") {
-            snapDown();
-        } else if (event.key === " ") {
             rotate();
+        } else if (event.key === " ") {
+            snapDown();
         }
     }
 }
@@ -107,15 +107,13 @@ function moveDown() {
 
     if (!current.some(index => squares[currentPosition + index + width].classList.contains("taken"))) {
         currentPosition += width;
-    }
-    
-    draw();
-    
-    if (current.some(index => squares[currentPosition + index + width].classList.contains("taken"))) {
+    } else {
         setTimeout(() => {
             freeze();
         }, delay);
     }
+    
+    draw();
 }
 
 function moveLeft() {
