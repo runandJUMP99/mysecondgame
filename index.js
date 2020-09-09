@@ -171,14 +171,16 @@ function rotate() {
 
     current = theTetrominoes[random][currentRotation];
     
+    //ON ROTATION, CHECK HOW MANY SQUARES ARE ON EACH SIDE OF GRID
     current.forEach(index => {
-        if ((currentPosition + index) % width <=1) {
+        if ((currentPosition + index) % width <= 1) {
             leftCount++;
         } else if ((currentPosition + index) % width >= 8) {
             rightCount++;
         }
     });
 
+    //DEPENDING ON WHICH SIDE HAS MORE SQUARES, SHIFT PIECE OVER ACCORDINGLY
     if (leftCount !== 0 && rightCount !== 0) {
         if (leftCount > rightCount) {
             currentPosition += 1;
@@ -186,6 +188,31 @@ function rotate() {
             currentPosition -= 1;
         } else if (leftCount === rightCount) {
             currentPosition -= 2;
+        }
+    }
+    
+    // if (current.some(index => squares[currentPosition + index - width].classList.contains("taken"))) {
+    //     console.log("if");
+    //     currentRotation--;
+        
+    //     if (currentRotation < 0) {
+    //         currentRotation = current.length - 1;
+    //     }
+
+    //     current = theTetrominoes[random][currentRotation];
+    // }
+
+    if (current.some(index => squares[currentPosition + index].classList.contains("taken"))) {
+        const currentHold = currentPosition;
+        let count = 0;
+
+        while (current.some(index => squares[currentPosition + index].classList.contains("taken"))) {
+            currentPosition -= width;
+            count++;
+        }
+
+        if (count > 2) {
+            currentPosition = currentHold;
         }
     }
 
