@@ -8,6 +8,7 @@ let squares = Array.from(document.querySelectorAll(".grid div"));
 const colors = ["orange", "yellow", "red", "cyan", "purple", "lightgreen", "blue"];
 const width = 10;
 let delay = 1000;
+let isGameOver = false;
 let level = 1;
 let nextRandom = 0;
 let score = 0;
@@ -64,7 +65,7 @@ const iTetromino = [
 
 const theTetrominoes = [lTetromino, l2Tetromino, zTetromino, z2Tetromino, tTetromino, oTetromino, iTetromino];
 
-let currentPosition = 4;
+let currentPosition = 44;
 let currentRotation = 0;
 
 let random = Math.floor(Math.random() * theTetrominoes.length);
@@ -87,7 +88,7 @@ function undraw() {
 document.addEventListener("keydown", control);
 
 function control(event) {
-    if (timerId) {
+    if (timerId && !isGameOver) {
         if (event.key === "ArrowLeft") {
             moveLeft();
         } else if (event.key === "ArrowRight") {
@@ -191,29 +192,28 @@ function rotate() {
         }
     }
     
-    // if (current.some(index => squares[currentPosition + index - width].classList.contains("taken"))) {
-    //     console.log("if");
-    //     currentRotation--;
-        
-    //     if (currentRotation < 0) {
-    //         currentRotation = current.length - 1;
-    //     }
-
-    //     current = theTetrominoes[random][currentRotation];
-    // }
-
     if (current.some(index => squares[currentPosition + index].classList.contains("taken"))) {
         const currentHold = currentPosition;
         let count = 0;
-
+        
         while (current.some(index => squares[currentPosition + index].classList.contains("taken"))) {
             currentPosition -= width;
             count++;
         }
-
+        
         if (count > 2) {
             currentPosition = currentHold;
         }
+    }
+    
+    if (current.some(index => squares[currentPosition + index].classList.contains("tetromino"))) {
+        currentRotation--;
+        
+        if (currentRotation < 0) {
+            currentRotation = current.length - 1;
+        }
+
+        current = theTetrominoes[random][currentRotation];
     }
 
     draw();
@@ -228,7 +228,7 @@ function freeze() {
         random = nextRandom
         nextRandom = Math.floor(Math.random() * theTetrominoes.length);
         current = theTetrominoes[random][currentRotation];
-        currentPosition = 4;
+        currentPosition = 44;
         
         displayShape();
         addScore();
@@ -267,7 +267,7 @@ function displayShape() {
 function addScore() {
     let countRows = 0;
 
-    for (let i = 0; i < 199; i += width) {
+    for (let i = 0; i < 239; i += width) {
         const row = [i, i + 1, i + 2, i + 3, i + 4, i + 5, i + 6, i + 7, i + 8, i + 9];
     
         if (row.every(index => squares[index].classList.contains("taken"))) {
@@ -287,6 +287,14 @@ function addScore() {
             const squaresRemoved = squares.splice(i, width);
             squares = squaresRemoved.concat(squares);
             squares.forEach(cell => grid.appendChild(cell));
+
+            for (let j = 0; j < 50; j++) {
+                if (j <= 39) {
+                    squares[j].classList.add("hidden");
+                } else {
+                    squares[j].classList.remove("hidden");
+                }
+            }
         }
     }
 
@@ -309,7 +317,7 @@ function nextLevel() {
     delay -= 100;
     
     if (delay < 100) {
-        delay = 50;
+        delay = 100;
     }
 
     timerId = setInterval(moveDown, delay);
@@ -317,6 +325,7 @@ function nextLevel() {
 
 function gameOver() {
     if (current.some(index => squares[currentPosition + index].classList.contains("taken"))) {
+        isGameOver = true;
         gameOverDisplay.innerHTML = "Game Over";
         clearInterval(timerId);
     }
@@ -344,9 +353,11 @@ startButton.addEventListener("click", function() {
             displayShape();
         }
     } else {
+        isGameOver = false;
         gameOverDisplay.innerHTML = "";
+        this.blur();
 
-        for (let i = 0; i < 199; i += width) {
+        for (let i = 0; i < 239; i += width) {
             const row = [i, i + 1, i + 2, i + 3, i + 4, i + 5, i + 6, i + 7, i + 8, i + 9];
             delay = 1000;
 
