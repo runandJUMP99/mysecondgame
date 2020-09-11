@@ -1,8 +1,13 @@
-const grid = document.querySelector(".grid");
+const downArrow = document.getElementById("down-arrow");
 const gameOverDisplay = document.getElementById("game-over");
+const grid = document.querySelector(".grid");
+const leftArrow = document.getElementById("left-arrow");
 const levelDisplay = document.getElementById("level-display");
+const rightArrow = document.getElementById("right-arrow");
 const scoreDisplay = document.getElementById("score-display");
+const spacebar = document.getElementById("spacebar");
 const startButton = document.getElementById("start-button");
+const upArrow = document.getElementById("up-arrow");
 let squares = Array.from(document.querySelectorAll(".grid div"));
 
 const colors = ["orange", "yellow", "red", "cyan", "purple", "lightgreen", "blue"];
@@ -86,18 +91,23 @@ function undraw() {
 }
 
 document.addEventListener("keydown", control);
+downArrow.addEventListener("click", control);
+leftArrow.addEventListener("click", control);
+rightArrow.addEventListener("click", control);
+spacebar.addEventListener("click", control);
+upArrow.addEventListener("click", control);
 
 function control(event) {
     if (timerId && !isGameOver) {
-        if (event.key === "ArrowLeft") {
+        if (event.key === "ArrowLeft" || event.target.id === "left-arrow") {
             moveLeft();
-        } else if (event.key === "ArrowRight") {
+        } else if (event.key === "ArrowRight" || event.target.id === "right-arrow") {
             moveRight();
-        } else if (event.key === "ArrowDown") {
+        } else if (event.key === "ArrowDown" || event.target.id === "down-arrow") {
             moveDown();
-        } else if (event.key === "ArrowUp") {
+        } else if (event.key === "ArrowUp" || event.target.id === "up-arrow") {
             rotate();
-        } else if (event.key === " ") {
+        } else if (event.key === " " || event.target.id === "spacebar") {
             snapDown();
         }
     }
