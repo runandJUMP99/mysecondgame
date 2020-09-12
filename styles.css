@@ -96,7 +96,7 @@ body {
     display: flex;
     flex-direction: column;
     margin-left: 10px;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 .controls__bottom-row {
@@ -127,8 +127,12 @@ body {
     top: 0.25rem;
 }
 
+.control i {
+    margin-top: 0.25rem;
+}
+
 #spacebar {
-    margin: 1rem 0;
+    margin: 1.5rem 0 1rem;
     width: 93%;
 }
 
@@ -163,6 +167,6 @@ body {
 
     .controls {
         margin-left: 50px;
-        margin-top: 95px;
+        margin-top: 125px;
     }
 }

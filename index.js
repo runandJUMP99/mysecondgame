@@ -235,10 +235,13 @@ function freeze() {
             squares[currentPosition + index].classList.add("taken");
         });
 
-        random = nextRandom
-        nextRandom = Math.floor(Math.random() * theTetrominoes.length);
-        current = theTetrominoes[random][currentRotation];
         currentPosition = 44;
+        currentRotation = 0;
+        random = nextRandom
+        
+        nextRandom = Math.floor(Math.random() * theTetrominoes.length);
+        
+        current = theTetrominoes[random][currentRotation];
         
         displayShape();
         addScore();
